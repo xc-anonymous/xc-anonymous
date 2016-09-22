@@ -1,0 +1,23 @@
+AM_CPPFLAGS = -I$(srcdir)/../util $(CXX11_FLAGS) $(PROTOBUF_CFLAGS)
+AM_CXXFLAGS = $(PICKY_CXXFLAGS) $(NODEBUG_CXXFLAGS)
+
+SUFFIXES = .asm
+.asm.o:
+	$(AS) $(ASFLAGS) -I$(srcdir)/../asm/ $<
+
+noinst_LIBRARIES = libexcamera-anonymousdecoder.a
+
+libexcamera-anonymousdecoder_a_SOURCES = vp8_raster.hh block.hh bool_decoder.hh decoder.cc decoder.hh \
+	frame.cc frame_header.hh frame.hh \
+	loopfilter.cc loopfilter_filters.hh loopfilter.hh \
+	macroblock.cc macroblock.hh modemv_data.cc modemv_data.hh \
+	prediction.cc quantization.cc quantization.hh tokens.cc tokens.hh \
+	transform.cc tree.cc uncompressed_chunk.cc uncompressed_chunk.hh \
+	vp8_header_structures.hh vp8_prob_data.cc vp8_prob_data.hh scorer.hh \
+	decoder_state.hh loopfilter_sse2.asm loopfilter_block_sse2_x86_64.asm \
+	predictor_sse.hh subpixel_ssse3.asm idctllm_mmx.asm \
+	transform_sse.hh raster_handle.hh raster_handle.cc \
+	player.cc player.hh \
+	probability_tables.cc \
+	config.asm x86_abi_support.asm enc_state_serializer.hh \
+	dct.cc
